@@ -8,6 +8,7 @@ including demographics, comorbidities, and simulated survival times.
 import numpy as np
 import pandas as pd
 from scipy.stats import norm, gamma, binom, uniform
+import os
 
 def generate_synthetic_data(
     num_samples=1000,
