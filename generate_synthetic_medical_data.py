@@ -69,7 +69,28 @@ def generate_synthetic_data(
     
     return data
 
+def export_synthetic_data(df, filename="synthetic_medical_data.csv"):
+    """
+    Exports the synthetic medical data to a CSV file in the data/generated_data directory.
+    
+    Args:
+        df: pandas DataFrame containing the synthetic medical data
+        filename: name of the CSV file to create (default: synthetic_medical_data.csv)
+    """
+    # Create data/generated_data directory if it doesn't exist
+    output_dir = "data/generated_data"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Construct full output path
+    output_path = os.path.join(output_dir, filename)
+    
+    # Export to CSV
+    df.to_csv(output_path, index=False)
+    print(f"Data exported to {output_path}")
+
+
 if __name__ == "__main__":
     # Example usage
     df = generate_synthetic_data(num_samples=2000)
     print(df.head(10))
+    export_synthetic_data(df)
