@@ -140,7 +140,7 @@ run_regression_comparison <- function(data, prior_spec = NULL) {
   # Set up priors for Bayesian model if not provided
   if (is.null(prior_spec)) {
     prior_spec <- c(
-      set_prior("normal(0, 2)", class = "b"),     # weakly informative prior for coefficients
+      set_prior("normal(0, 2)", class = "b"),     # weakly informative prior for coefficients # nolint: line_length_linter.
       set_prior("student_t(3, 0, 10)", class = "Intercept")
     )
   }

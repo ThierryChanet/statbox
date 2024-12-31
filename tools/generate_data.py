@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm, gamma, binom, uniform
 import os
+import datetime
 
 def generate_synthetic_data(
     num_samples=1000,
@@ -70,17 +71,23 @@ def generate_synthetic_data(
     
     return data
 
-def export_synthetic_data(df, filename="synthetic_medical_data.csv"):
+def export_synthetic_data(df, filename=None):
     """
     Exports the synthetic medical data to a CSV file in the data/generated_data directory.
+    The filename includes the current date if no filename is provided.
     
     Args:
         df: pandas DataFrame containing the synthetic medical data
-        filename: name of the CSV file to create (default: synthetic_medical_data.csv)
+        filename: name of the CSV file to create (default: None, will use date-based name)
     """
     # Create data/generated_data directory if it doesn't exist
     output_dir = "data/generated_data"
     os.makedirs(output_dir, exist_ok=True)
+    
+    # Generate default filename with date if none provided
+    if filename is None:
+        today = datetime.date.today().strftime("%Y%m%d")
+        filename = f"synthetic_medical_data_{today}.csv"
     
     # Construct full output path
     output_path = os.path.join(output_dir, filename)
@@ -91,7 +98,17 @@ def export_synthetic_data(df, filename="synthetic_medical_data.csv"):
 
 
 if __name__ == "__main__":
-    # Example usage
-    df = generate_synthetic_data(num_samples=2000)
+    # Get parameters via user input
+    samples = int(input("Enter number of samples to generate (default: 2000): ") or "2000")
+    filename = input("Enter output filename (press Enter for date-based name): ") or None
+    survival_shape = float(input("Enter shape parameter for survival time distribution (default: 2.0): ") or "2.0")
+    survival_scale = float(input("Enter scale parameter for survival time distribution (default: 5.0): ") or "5.0")
+    
+    # Generate data with specified parameters
+    df = generate_synthetic_data(
+        num_samples=samples,
+        survival_shape=survival_shape, 
+        survival_scale=survival_scale
+    )
     print(df.head(10))
-    export_synthetic_data(df)
+    export_synthetic_data(df, filename=filename)
