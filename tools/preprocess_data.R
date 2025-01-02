@@ -129,8 +129,6 @@ main <- function(input_subfolder = "generated_data", output_subfolder = "preproc
   return(output_path)
 }
 
-main()
-
 
 # Example usage:
 # processed_file <- main("input_data", "preprocessed_data")
